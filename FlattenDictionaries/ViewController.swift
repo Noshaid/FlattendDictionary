@@ -45,27 +45,22 @@ class ViewController: UIViewController {
     func makeDict(dict: Dictionary<String, Any>, inputkey: String, flatDictionary: inout Dictionary<String, Any>) {
         for (key, value) in dict {
             if value is Dictionary<String, Any> {
-            if !key.isEmpty && inputkey != "" {
-                makeDict(dict: value as! Dictionary<String, Any>, inputkey: "\(inputkey).\(key)", flatDictionary: &flatDictionary)
-            } else {
-                makeDict(dict: value as! Dictionary<String, Any>, inputkey: key, flatDictionary: &flatDictionary)
-            }
-          } else {
-            if !key.isEmpty && inputkey != "" {
-              flatDictionary["\(inputkey).\(key)"] = value
-            } else {
-                if inputkey != "" {
-                    flatDictionary[inputkey] = value
+                if !key.isEmpty && inputkey != "" {
+                    makeDict(dict: value as! Dictionary<String, Any>, inputkey: "\(inputkey).\(key)", flatDictionary: &flatDictionary)
                 } else {
-                    flatDictionary[key] = value
+                    makeDict(dict: value as! Dictionary<String, Any>, inputkey: key, flatDictionary: &flatDictionary)
+                }
+            } else {
+                if !key.isEmpty && inputkey != "" {
+                    flatDictionary["\(inputkey).\(key)"] = value
+                } else {
+                    if inputkey != "" {
+                        flatDictionary[inputkey] = value
+                    } else {
+                        flatDictionary[key] = value
+                    }
                 }
             }
-          }
         }
     }
-
-
-
-
 }
-
